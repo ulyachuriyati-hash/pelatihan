@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Urutkan Kata Bahasa Inggris</title>
+  <style>
+    body {
+      background-color: #001f3f; /* Biru tua */
+      color: #000;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      background-color: #90ee90; /* Hijau muda */
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    .word-bank, .drop-area {
+      min-height: 50px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px dashed #000;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .drop-area {
+      background-color: white;
+    }
+
+    .word {
+      background-color: #fff;
+      padding: 10px 15px;
+      margin: 5px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      cursor: move;
+      user-select: none;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 10px 5px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Urutkan Kalimat Bahasa Inggris</h2>
+  <p>Susun kata-kata berikut menjadi kalimat yang benar:</p>
+  <div class="word-bank" id="wordBank"></div>
+  <div class="drop-area" id="dropArea" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+  <div>
+    <button onclick="previousSentence()">Previous</button>
+    <button onclick="nextSentence()">Next</button>
+    <button onclick="checkAnswer()">Hasil</button>
+    <button onclick="resetCurrent()">Reset</button>
+  </div>
+
+  <div id="feedback"></div>
+</div>
+
+<script>
+  const sentences = [
+    ["I", "am", "going", "to", "the", "market"],
+    ["I", "will", "go", "to", "the", "mountain"],
+    ["I", "will", "play", "football", "tomorrow"],
+    ["I", "am", "speaking", "english"],
+    ["I", "went", "to", "the", "zoo", "yesterday"]
+  ];
+
+  const correctAnswers = [
+    "I-am-going-to-the-market",
+    "I-will-go-to-the-mountain",
+    "I-will-play-football-tomorrow",
+    "I-am-speaking-english",
+    "I-went-to-the-zoo-yesterday"
+  ];
+
+  let currentIndex = 0;
+
+  function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  function renderSentence(index) {
+    document.getElementById("wordBank").innerHTML = "";
+    document.getElementById("dropArea").innerHTML = "";
+    document.getElementById("feedback").innerText = "";
+
+    let words = [...sentences[index]];
+    shuffle(words);
+    words.forEach((word, idx) => {
+      const span = document.createElement("span");
+      span.innerText = word;
+      span.className = "word";
+      span.setAttribute("draggable", "true");
+      span.setAttribute("id", "word-" + idx);
+      span.ondragstart = drag;
+      document.getElementById("wordBank").appendChild(span);
+    });
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    const wordElement = document.getElementById(data);
+    if (wordElement) {
+      ev.target.appendChild(wordElement);
+    }
+  }
+
+  function checkAnswer() {
+    const dropArea = document.getElementById("dropArea");
+    const words = Array.from(dropArea.children).map(el => el.innerText);
+    const userAnswer = words.join("-");
+    const correct = correctAnswers[currentIndex];
+    if (userAnswer === correct) {
+      document.getElementById("feedback").innerText = "Hebat jawaban anda benar!";
+      document.getElementById("feedback").style.color = "green";
+    } else {
+      document.getElementById("feedback").innerText = "Maaf jawaban anda salah, silahkan ulangi lagi.";
+      document.getElementById("feedback").style.color = "red";
+    }
+  }
+
+  function nextSentence() {
+    if (currentIndex < sentences.length - 1) {
+      currentIndex++;
+      renderSentence(currentIndex);
+    }
+  }
+
+  function previousSentence() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderSentence(currentIndex);
+    }
+  }
+
+  function resetCurrent() {
+    renderSentence(currentIndex);
+  }
+
+  // Mulai dari soal pertama
+  renderSentence(currentIndex);
+</script>
+
+</body>
+</html>
