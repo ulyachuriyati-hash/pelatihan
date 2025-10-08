@@ -1,0 +1,101 @@
+ <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TEKA-TEKI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 36px;
+    }
+
+    .riddle-box {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 25px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4KX380T5BD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4KX380T5BD');
+</script>
+
+
+
+  <h1>TEKA-TEKI</h1>
+
+  <div class="riddle-box">
+    <p class="question">
+      Aku adalah seekor hewan. Jumlah kakiku ada empat buah. Aku memiliki ekor. Aku juga memiliki belalai. Siapakah aku?
+    </p>
+
+    <input type="text" id="jawaban" placeholder="Ketik jawaban di sini..." />
+    <br />
+    <button onclick="cekJawaban()">Kirim Jawaban</button>
+
+    <div id="feedback"></div>
+  </div>
+
+  <script>
+    function cekJawaban() {
+      const input = document.getElementById('jawaban').value.trim().toLowerCase();
+      const feedback = document.getElementById('feedback');
+
+      if (input === 'gajah') {
+        feedback.textContent = "Jawaban Anda benar, hebat";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "Jawaban Anda salah, silahkan coba lagi.";
+        feedback.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+<!-- Hosted by www.Geocities.ws -->
+</html>
