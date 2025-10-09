@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flipbook dengan Back Cover</title>
+<style>
+  body {
+    margin: 0;
+    background: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .book {
+    width: calc(100% - 3cm); /* sisakan 1.5 cm kiri & kanan */
+    max-width: 900px;
+    height: 500px;
+    position: relative;
+    perspective: 2000px;
+  }
+  .page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-origin: left center;
+    transition: transform 1s ease-in-out;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    background: #F5F5F5;
+    overflow: hidden;
+  }
+  .page-content {
+    padding: 40px;
+    font-size: 20px;
+  }
+  /* cover depan gambar */
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  /* back cover biru muda */
+  .back-cover {
+    background: lightblue;
+  }
+</style>
+</head>
+<body>
+
+<div class="book" id="book">
+  <!-- Cover depan -->
+  <div class="page cover" data-page="0">
+    <img src="url_gambarcover" alt="Cover Buku">
+  </div>
+
+  <!-- Halaman 1 -->
+  <div class="page" data-page="1">
+    <div class="page-content">
+      <img src="url_gambar1" width="850" height="425">
+    </div>
+  </div>
+
+  <!-- Halaman 2 -->
+  <div class="page" data-page="2">
+    <div class="page-content">
+ <img src="url_gambar2" width="850" height="425">    
+    </div>
+  </div>
+
+   <!-- Halaman 3 -->
+  <div class="page" data-page="3">
+    <div class="page-content">
+     <img src="url_gambar3" width="850" height="425">
+    </div>
+  </div>
+
+<!-- Halaman 4 -->
+<div class="page" data-page="4">
+  <div class="page-content">
+    <img src="url_gambar4" width="850" height="425">
+  </div>
+</div>
+
+<!-- Halaman 5 -->
+<div class="page" data-page="5">
+  <div class="page-content">
+    <img src="url_gambar5" width="850" height="425">
+  </div>
+</div>
+
+<!-- Halaman 6 -->
+<div class="page" data-page="4">
+  <div class="page-content">
+    <img src="https://www.geocities.ws/diklat/bookflip/picto.png" width="850" height="425">
+  </div>
+</div>
+
+<!-- Halaman 7 -->
+<div class="page" data-page="4">
+  <div class="page-content">
+    <img src="https://www.geocities.ws/diklat/bookflip/phyton.png" width="850" height="425">
+  </div>
+</div>
+
+<!-- Halaman 8 -->
+<div class="page" data-page="4">
+  <div class="page-content">
+    <img src="https://www.geocities.ws/diklat/bookflip/mutadi.png" width="850" height="425">
+  </div>
+</div>
+
+  <!-- Back cover -->
+  <div class="page back-cover" data-page="4"></div>
+</div>
+
+<script>
+  const pages = document.querySelectorAll(".page");
+  let zIndexCounter = 1;
+
+  pages.forEach((page, index) => {
+    page.style.zIndex = pages.length - index;
+    page.addEventListener("click", () => {
+      if (!page.classList.contains("flipped")) {
+        page.style.transform = "rotateY(-180deg)";
+        page.classList.add("flipped");
+        page.style.zIndex = ++zIndexCounter;
+      } else {
+        page.style.transform = "rotateY(0deg)";
+        page.classList.remove("flipped");
+        page.style.zIndex = ++zIndexCounter;
+      }
+    });
+  });
+</script>
+</body>
+</html>
